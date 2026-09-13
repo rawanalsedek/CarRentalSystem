@@ -1,0 +1,128 @@
+/* =========================
+   TABLET
+========================= */
+@media (max-width: 991px) {
+    .main-navbar {
+        background: rgba(6, 20, 38, 0.95);
+        padding: 16px 0;
+        backdrop-filter: blur(12px);
+    }
+    .navbar-nav {
+        margin-top: 20px;
+        gap: 0;
+    }
+    .nav-link {
+        padding: 10px 0 !important;
+    }
+    .nav-link::after {
+        left: 0;
+        right: auto;
+        width: 35px;
+        bottom: 3px;
+    }
+    .navbar-buttons {
+        margin-top: 15px;
+        padding-bottom: 10px;
+    }
+    .hero-content {
+        padding-top: 130px;
+    }
+    .hero-background {
+        animation-duration: 10s;
+    }
+    .booking-box {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .booking-item {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        min-height: 65px;
+    }
+    .booking-item:last-of-type {
+        border-bottom: none;
+    }
+    .search-button {
+        width: 100%;
+        margin-top: 5px;
+        min-height: 52px;
+    }
+    .hero-features {
+        gap: 25px;
+    }
+}
+/* =========================
+   MOBILE
+========================= */
+@media (max-width: 576px) {
+    .main-navbar {
+        padding: 14px 0;
+    }
+    .logo {
+        font-size: 19px;
+    }
+    .logo i {
+        font-size: 22px;
+    }
+    .hero-content {
+        padding-top: 120px;
+        padding-bottom: 35px;
+    }
+    .hero-background {
+        inset: -12%;
+        animation-duration: 8s;
+    }
+    .hero-overlay {
+        background:
+            linear-gradient(
+                90deg,
+                rgba(6, 20, 38, 0.96),
+                rgba(6, 20, 38, 0.70)
+            );
+    }
+    .hero-text h1 {
+        font-size: 45px;
+        letter-spacing: -1px;
+    }
+    .hero-text p {
+        font-size: 14px;
+        line-height: 1.7;
+    }
+    .booking-box {
+        margin-top: 30px;
+        padding: 8px;
+    }
+    .booking-item {
+        padding: 12px;
+    }
+
+    .hero-features {
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 35px;
+    }
+
+    .hero-feature {
+        width: 100%;
+        padding: 8px;
+    }
+
+    .hero-glow {
+        width: 300px;
+        height: 200px;
+        right: -100px;
+        bottom: 0;
+    }
+}
+
+@media (max-width: 767px) {
+    .footer-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .footer-links {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+}

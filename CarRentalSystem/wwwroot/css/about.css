@@ -1,0 +1,215 @@
+.about-page {
+    flex: 1;
+    background: #061426;
+    overflow: hidden;
+}
+.about-hero {
+    position: relative;
+    min-height: 510px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+.about-hero-image {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(6,20,38,.96), rgba(6,20,38,.72)), url("https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=2000&q=85") center / cover;
+    transform: scale(1.04);
+    animation: aboutBackground 16s ease-in-out infinite alternate;
+}
+.about-hero-content {
+    position: relative;
+    max-width: 760px;
+    padding-top: 75px;
+    animation: aboutEnter .7s ease both;
+}
+.about-hero h1 {
+    margin: 8px 0 16px;
+    font-size: clamp(40px,6vw,65px);
+    font-weight: 700;
+    letter-spacing: -2px;
+    line-height: 1.1;
+}
+.about-hero h1 span, .about-story h2 span {
+    color: var(--primary-light);
+}
+.about-hero p {
+    max-width: 610px;
+    color: var(--text-light);
+    font-size: 15px;
+    line-height: 1.9;
+}
+.about-story {
+    padding: 95px 0;
+    background: radial-gradient(circle at 90% 25%, rgba(14,165,255,.08), transparent 25%);
+}
+.about-image {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: 0 24px 55px rgba(0,0,0,.3);
+}
+.about-image img {
+    width: 100%;
+    min-height: 390px;
+    object-fit: cover;
+    transition: transform .6s ease;
+}
+.about-image:hover img {
+    transform: scale(1.05);
+}
+.about-image-badge {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    padding: 13px 16px;
+    border: 1px solid rgba(14,165,255,.25);
+    border-radius: 11px;
+    background: rgba(6,20,38,.82);
+    backdrop-filter: blur(10px);
+}
+.about-image-badge strong {
+    color: var(--primary-light);
+    font-size: 20px;
+}
+.about-image-badge span {
+    color: var(--text-light);
+    font-size: 10px;
+}
+.about-story h2 {
+    margin: 9px 0 18px;
+    font-size: clamp(28px,4vw,40px);
+    font-weight: 600;
+}
+.about-story p {
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.95;
+}
+.about-values {
+    display: grid;
+    gap: 15px;
+    margin-top: 28px;
+}
+.about-values > div {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+.about-values i {
+    display: grid;
+    width: 39px;
+    height: 39px;
+    place-items: center;
+    border: 1px solid rgba(14,165,255,.2);
+    border-radius: 10px;
+    background: rgba(37,99,235,.12);
+    color: var(--primary-light);
+}
+.about-values span {
+    display: grid;
+    color: var(--text-muted);
+    font-size: 10px;
+}
+.about-values strong {
+    color: var(--white);
+    font-size: 12px;
+}
+.about-stats {
+    padding: 70px 0;
+    background: rgba(4,14,27,.82);
+}
+.about-stats article {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 20px;
+    text-align: center;
+}
+.about-stats i {
+    color: var(--primary-light);
+    font-size: 25px;
+    transition: .3s ease;
+}
+.about-stats article:hover i {
+    transform: translateY(-4px) scale(1.08);
+    filter: drop-shadow(0 0 10px rgba(14,165,255,.35));
+}
+.about-stats strong {
+    font-size: 31px;
+    font-weight: 600;
+}
+.about-stats span {
+    color: var(--text-muted);
+    font-size: 11px;
+}
+.about-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    max-width: 1130px;
+    margin: 80px auto;
+    padding: 36px 42px;
+    border: 1px solid rgba(14,165,255,.18);
+    border-radius: 17px;
+    background: linear-gradient(120deg, rgba(37,99,235,.14), rgba(11,27,48,.9));
+}
+.about-cta h2 {
+    margin: 6px 0 7px;
+    font-size: 28px;
+}
+.about-cta p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 12px;
+}
+.about-cta .primary-button i {
+    margin-left: 6px;
+    transition: .3s ease;
+}
+.about-cta .primary-button:hover i {
+    transform: translateX(4px);
+}
+@keyframes aboutEnter {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@keyframes aboutBackground {
+    from {
+        transform: scale(1.04) translateX(-1%);
+    }
+    to {
+        transform: scale(1.09) translateX(1%);
+    }
+}
+@media(max-width:767px) {
+    .about-hero {
+        min-height: 450px;
+    }
+    .about-story {
+        padding: 65px 0;
+    }
+    .about-image img {
+        min-height: 290px;
+    }
+    .about-cta {
+        margin: 55px 15px;
+        padding: 28px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .about-cta h2 {
+        font-size: 24px;
+    }
+}

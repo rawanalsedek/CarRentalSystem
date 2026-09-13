@@ -1,0 +1,69 @@
+@import url("login.css");
+
+/* Register uses the Login visual system with extra space for its fields. */
+.signup-page {
+    min-height: 890px;
+    display: flex;
+    align-items: center;
+    padding: 120px 0 70px;
+    isolation: isolate;
+}
+
+.signup-card {
+    width: min(100%, 500px);
+}
+
+.terms-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 20px 0 22px;
+    color: var(--text-muted);
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.terms-option input {
+    width: 14px;
+    height: 14px;
+    accent-color: var(--primary-light);
+}
+
+.terms-option a {
+    color: var(--primary-light);
+}
+
+.terms-option a:hover {
+    color: var(--white);
+}
+
+.field-error,
+.form-status {
+    display: block;
+    min-height: 15px;
+    margin-top: 5px;
+    color: #fca5a5;
+    font-size: 10px;
+}
+
+.field-error:empty,
+.form-status:empty {
+    display: none;
+}
+
+.auth-input.has-error {
+    border-color: rgba(248, 113, 113, 0.75);
+}
+
+.form-status {
+    margin: 13px 0 0;
+    color: #86efac;
+    text-align: center;
+}
+
+@media (max-width: 576px) {
+    .signup-page {
+        min-height: 820px;
+        padding: 110px 0 55px;
+    }
+}

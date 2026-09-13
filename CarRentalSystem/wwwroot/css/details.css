@@ -1,0 +1,592 @@
+/* =========================
+   DETAILS PAGE
+========================= */
+
+.details-page {
+    min-height: 100vh;
+}
+
+
+.details-section {
+    padding: 110px 0 100px;
+}
+
+
+/* Back Link */
+
+.back-link {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: var(--text-muted);
+
+    font-size: 12px;
+
+    margin-bottom: 30px;
+
+    transition: 0.3s ease;
+}
+
+
+.back-link:hover {
+    color: var(--primary-light);
+
+    transform: translateX(-4px);
+}
+
+
+/* =========================
+   IMAGE
+========================= */
+
+.details-image-box {
+    position: relative;
+
+    height: 500px;
+
+    overflow: hidden;
+
+    border-radius: 18px;
+
+    background: var(--bg-card);
+
+    border: 1px solid var(--border);
+
+    box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.30);
+}
+
+
+.details-image-box img {
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    transition: transform 0.7s ease;
+}
+
+
+.details-image-box:hover img {
+    transform: scale(1.04);
+}
+
+
+.details-status {
+    position: absolute;
+
+    top: 18px;
+
+    left: 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 8px 13px;
+
+    border-radius: 20px;
+
+    background: rgba(6, 20, 38, 0.75);
+
+    border: 1px solid rgba(16, 185, 129, 0.25);
+
+    color: #6ee7b7;
+
+    font-size: 11px;
+
+    backdrop-filter: blur(10px);
+}
+
+
+.details-status i {
+    font-size: 7px;
+}
+
+
+/* =========================
+   SPECIFICATIONS
+========================= */
+
+.specifications-box {
+    margin-top: 25px;
+
+    padding: 25px;
+
+    border-radius: 16px;
+
+    background: rgba(11, 27, 48, 0.85);
+
+    border: 1px solid var(--border);
+}
+
+
+.specifications-box h3 {
+    font-size: 18px;
+
+    font-weight: 600;
+
+    margin-bottom: 25px;
+}
+
+
+.specifications-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 20px;
+}
+
+
+.specification {
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+}
+
+
+.specification > i {
+    width: 40px;
+
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 10px;
+
+    color: var(--primary-light);
+
+    background: rgba(37, 99, 235, 0.10);
+
+    border: 1px solid rgba(37, 99, 235, 0.15);
+}
+
+
+.specification div {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+
+.specification span {
+    color: var(--text-muted);
+
+    font-size: 10px;
+}
+
+
+.specification strong {
+    color: var(--white);
+
+    font-size: 12px;
+
+    font-weight: 500;
+}
+
+
+/* =========================
+   BOOKING CARD
+========================= */
+
+.details-booking-card {
+    position: sticky;
+
+    top: 25px;
+
+    padding: 30px;
+
+    border-radius: 18px;
+
+    background: rgba(11, 27, 48, 0.90);
+
+    border: 1px solid var(--border);
+
+    box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.25);
+
+    backdrop-filter: blur(15px);
+}
+
+
+.details-brand {
+    color: var(--primary-light);
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 2px;
+}
+
+
+.details-booking-card h1 {
+    margin: 6px 0 15px;
+
+    font-size: 38px;
+
+    font-weight: 600;
+}
+
+
+.details-description {
+    color: var(--text-muted);
+
+    font-size: 12px;
+
+    line-height: 1.8;
+
+    margin-bottom: 22px;
+}
+
+
+.details-price {
+    display: flex;
+
+    align-items: baseline;
+
+    gap: 5px;
+}
+
+
+.details-price strong {
+    color: var(--white);
+
+    font-size: 32px;
+
+    font-weight: 600;
+}
+
+
+.details-price span {
+    color: var(--text-muted);
+
+    font-size: 11px;
+}
+
+
+.details-divider {
+    height: 1px;
+
+    background: var(--border);
+
+    margin: 25px 0;
+}
+
+
+/* Date */
+
+.date-field {
+    margin-bottom: 18px;
+}
+
+
+.date-field label {
+    display: block;
+
+    color: var(--text-light);
+
+    font-size: 11px;
+
+    margin-bottom: 7px;
+}
+
+
+.date-input {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 0 13px;
+
+    height: 50px;
+
+    border-radius: 9px;
+
+    background: rgba(255, 255, 255, 0.035);
+
+    border: 1px solid var(--border);
+
+    transition: 0.3s ease;
+}
+
+
+.date-input:focus-within {
+    border-color: rgba(14, 165, 255, 0.35);
+
+    box-shadow:
+        0 0 20px rgba(14, 165, 255, 0.06);
+}
+
+
+.date-input i {
+    color: var(--primary-light);
+}
+
+
+.date-input input {
+    width: 100%;
+
+    height: 100%;
+
+    background: transparent;
+
+    border: none;
+
+    outline: none;
+
+    color: var(--white);
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    color-scheme: dark;
+}
+
+
+/* Total */
+
+.total-box {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 18px;
+
+    margin-top: 25px;
+
+    border-radius: 10px;
+
+    background: rgba(37, 99, 235, 0.08);
+
+    border: 1px solid rgba(37, 99, 235, 0.15);
+}
+
+
+.total-box div {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+
+.total-box span {
+    color: var(--white);
+
+    font-size: 12px;
+
+    font-weight: 500;
+}
+
+
+.total-box small {
+    color: var(--text-muted);
+
+    font-size: 9px;
+}
+
+
+.total-box strong {
+    color: var(--primary-light);
+
+    font-size: 25px;
+
+    font-weight: 600;
+}
+
+
+/* Reserve Button */
+
+.reserve-button {
+    width: 100%;
+
+    height: 52px;
+
+    margin-top: 18px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: var(--primary);
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+
+    box-shadow:
+        0 10px 25px rgba(37, 99, 235, 0.20);
+}
+
+
+.reserve-button:hover {
+    background: var(--primary-light);
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 15px 30px rgba(14, 165, 255, 0.30);
+}
+
+
+.reserve-button i {
+    margin-right: 7px;
+}
+
+
+/* Secure */
+
+.secure-text {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 6px;
+
+    color: var(--text-muted);
+
+    font-size: 9px;
+
+    margin: 15px 0 0;
+}
+
+
+.secure-text i {
+    color: var(--success, #10b981);
+}
+
+
+/* =========================
+   DESCRIPTION
+========================= */
+
+.car-description-section {
+    max-width: 850px;
+
+    margin-top: 80px;
+}
+
+
+.car-description-section h2 {
+    font-size: 30px;
+
+    font-weight: 600;
+
+    margin: 10px 0 15px;
+}
+
+
+.car-description-section p {
+    color: var(--text-muted);
+
+    font-size: 13px;
+
+    line-height: 2;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 991px) {
+
+    .details-section {
+        padding-top: 50px;
+    }
+
+
+    .details-image-box {
+        height: 420px;
+    }
+
+
+    .details-booking-card {
+        position: relative;
+
+        top: auto;
+    }
+
+}
+
+
+@media (max-width: 576px) {
+
+    .details-section {
+        padding: 40px 0 70px;
+    }
+
+
+    .details-image-box {
+        height: 280px;
+
+        border-radius: 14px;
+    }
+
+
+    .specifications-box {
+        padding: 18px;
+    }
+
+
+    .specifications-grid {
+        grid-template-columns: 1fr;
+
+        gap: 15px;
+    }
+
+
+    .details-booking-card {
+        padding: 22px;
+    }
+
+
+    .details-booking-card h1 {
+        font-size: 30px;
+    }
+
+
+    .car-description-section {
+        margin-top: 55px;
+    }
+
+
+    .car-description-section h2 {
+        font-size: 25px;
+    }
+
+}
