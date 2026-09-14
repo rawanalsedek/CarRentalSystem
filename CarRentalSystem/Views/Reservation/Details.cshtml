@@ -1,0 +1,66 @@
+@model ReservationDetailsViewModel
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Reservation Details";
+    ViewData["AdminSection"] = "reservations";
+    var days = (Model.EndDate.Date - Model.StartDate.Date).Days;
+    if (days < 1)
+    {
+        days = 1;
+    }
+}
+
+<header class="admin-top">
+    <div>
+        <span class="admin-eyebrow">RENTAL REQUESTS</span>
+        <h1>Reservations</h1>
+        <p>Manage customer bookings and rental requests.</p>
+    </div>
+</header>
+
+<div class="modal-box" style="position:relative; margin:0 auto;">
+    <h2>Reservation #@Model.Id</h2>
+    <div class="reservation-dates">
+        <div>
+            <span>Customer</span>
+            <strong>@Model.CustomerName</strong>
+        </div>
+        <div>
+            <span>Email</span>
+            <strong>@Model.CustomerEmail</strong>
+        </div>
+        <div>
+            <span>Car</span>
+            <strong>@Model.CarName</strong>
+        </div>
+        <div>
+            <span>Pick-up</span>
+            <strong>@Model.StartDate.ToString("dd MMM yyyy")</strong>
+        </div>
+        <div>
+            <span>Drop-off</span>
+            <strong>@Model.EndDate.ToString("dd MMM yyyy")</strong>
+        </div>
+        <div>
+            <span>Duration</span>
+            <strong>@days Days</strong>
+        </div>
+        <div>
+            <span>Total</span>
+            <strong>$@Model.TotalPrice.ToString("0")</strong>
+        </div>
+        <div>
+            <span>Status</span>
+            <strong>@Model.Status</strong>
+        </div>
+    </div>
+    <div class="modal-actions">
+        <a class="admin-button cancel-modal" asp-action="Index">Close</a>
+        @if (Model.Status == ReservationStatus.Pending)
+        {
+            <form asp-action="Approve" asp-route-id="@Model.Id" method="post">
+                <button class="admin-button" type="submit">Approve</button>
+            </form>
+        }
+    </div>
+</div>

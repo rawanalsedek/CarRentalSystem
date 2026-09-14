@@ -1,0 +1,54 @@
+@model LoginVm
+@{
+    ViewData["Title"] = "Login";
+    ViewData["PageCss"] = "login.css";
+    ViewData["PageJs"] = "login.js";
+}
+
+<main class="auth-page login-page">
+    <div class="auth-background" aria-hidden="true"></div>
+    <div class="container auth-container">
+        <section class="login-card" aria-labelledby="loginTitle">
+            <div class="login-card-icon"><i class="fa-solid fa-car-side"></i></div>
+            <span class="auth-eyebrow">WELCOME BACK</span>
+            <h1 id="loginTitle">Sign in to DriveRent</h1>
+            <p class="auth-intro">Access your bookings and get back on the road.</p>
+
+            <form class="login-form" id="loginForm" asp-action="Login" method="post">
+                <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+                <div asp-validation-summary="ModelOnly" class="auth-errors"></div>
+
+                <label for="email">Email address</label>
+                <div class="auth-input">
+                    <i class="fa-regular fa-envelope"></i>
+                    <input asp-for="UserName" id="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+                </div>
+
+                <label for="password">Password</label>
+                <div class="auth-input">
+                    <i class="fa-solid fa-lock"></i>
+                    <input asp-for="Password" id="password" placeholder="Enter your password" autocomplete="current-password" required>
+                </div>
+
+                <div class="login-options">
+                    <label class="remember-me" for="rememberMe">
+                        <input asp-for="RememberMe" id="rememberMe">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="#">Forgot password?</a>
+                </div>
+
+                <button class="auth-submit" type="submit">
+                    Login <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </form>
+
+            <a class="customer-link" asp-controller="Car" asp-action="Index">
+                <i class="fa-solid fa-user"></i>
+                Continue as customer
+            </a>
+
+            <p class="register-prompt">New to DriveRent? <a asp-action="Register">Create an account</a></p>
+        </section>
+    </div>
+</main>

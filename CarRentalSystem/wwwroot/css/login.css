@@ -1,6 +1,12 @@
 /* =========================
    LOGIN PAGE
 ========================= */
+.auth-errors {
+    color: #fca5a5;
+    font-size: 12px;
+    margin: 0 0 14px;
+}
+
 .login-page {
     min-height: 760px;
     display: flex;

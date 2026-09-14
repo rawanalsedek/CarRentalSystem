@@ -1,0 +1,175 @@
+@model IEnumerable<Car>
+@{
+    ViewData["Title"] = "Cars";
+    ViewData["PageCss"] = "cars.css";
+    ViewData["PageJs"] = "cars.js";
+    ViewData["NavbarExtraClass"] = "cars-navbar";
+
+    var cars = Model.ToList();
+    var brands = cars
+        .Select(c => c.Brand)
+        .Where(b => !string.IsNullOrWhiteSpace(b))
+        .Select(b => b!)
+        .Distinct(StringComparer.OrdinalIgnoreCase)
+        .OrderBy(b => b)
+        .ToList();
+
+    string StatusClass(CarStatus status) => status switch
+    {
+        CarStatus.Available => "available",
+        CarStatus.Rented => "rented",
+        _ => "reserved"
+    };
+}
+
+<main class="cars-page">
+    <section class="cars-header">
+        <div class="container">
+            <div class="cars-header-content">
+                <span class="section-small-title">
+                    <i class="fa-solid fa-car"></i>
+                    OUR FLEET
+                </span>
+                <h1>
+                    Find Your Perfect
+                    <span>Ride</span>
+                </h1>
+                <p>
+                    Choose from our wide selection of reliable
+                    and premium vehicles for every journey.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="cars-filter-section">
+        <div class="container">
+            <div class="cars-filter-box">
+                <div class="filter-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text"
+                           id="carSearch"
+                           placeholder="Search by brand or model...">
+                </div>
+                <div class="filter-item">
+                    <label for="brandFilter">Brand</label>
+                    <select id="brandFilter">
+                        <option value="all">All Brands</option>
+                        @foreach (var brand in brands)
+                        {
+                            <option value="@brand.ToLowerInvariant()">@brand</option>
+                        }
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label for="categoryFilter">Category</label>
+                    <select id="categoryFilter">
+                        <option value="all">All Categories</option>
+                        <option value="sedan">Sedan</option>
+                        <option value="suv">SUV</option>
+                        <option value="luxury">Luxury</option>
+                        <option value="sports">Sports</option>
+                        <option value="economy">Economy</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label for="priceFilter">Price</label>
+                    <select id="priceFilter">
+                        <option value="all">All Prices</option>
+                        <option value="low">Under $70</option>
+                        <option value="medium">$70 - $100</option>
+                        <option value="mid-high">$100 - $150</option>
+                        <option value="high">$150+</option>
+                    </select>
+                </div>
+                <button class="reset-button" id="resetFilters" type="button">
+                    <i class="fa-solid fa-rotate-left"></i>
+                    Reset
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="cars-list-section">
+        <div class="container">
+            <div class="cars-results-header">
+                <div>
+                    <h2>Available Cars</h2>
+                    <span id="carsCount">@cars.Count Cars Available</span>
+                </div>
+                <div class="sort-box">
+                    <span>Sort by</span>
+                    <select id="sortCars">
+                        <option value="default">Recommended</option>
+                        <option value="low-high">Price: Low to High</option>
+                        <option value="high-low">Price: High to Low</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row g-4" id="carsGrid">
+                @foreach (var car in cars)
+                {
+                    var brand = car.Brand ?? "";
+                    var carModel = car.Model ?? "";
+                    var category = car.Category?.Name ?? "";
+                    var image = string.IsNullOrWhiteSpace(car.ImageUrl)
+                        ? "https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=900&q=85"
+                        : car.ImageUrl;
+
+                    <div class="col-lg-4 col-md-6 car-column"
+                         data-brand="@brand.ToLowerInvariant()"
+                         data-category="@category.ToLowerInvariant()"
+                         data-price="@car.PricePerDay.ToString("0.##")"
+                         data-name="@brand @carModel">
+                        <div class="car-card">
+                            <div class="car-image">
+                                <img src="@image" alt="@brand @carModel">
+                                <span class="car-status @StatusClass(car.Status)">@car.Status</span>
+                                <span class="car-category">@category</span>
+                            </div>
+                            <div class="car-card-content">
+                                <div class="car-brand">@brand</div>
+                                <h3>@carModel</h3>
+                                <div class="car-info">
+                                    <span>
+                                        <i class="fa-regular fa-calendar"></i>
+                                        @car.Year
+                                    </span>
+                                    <span>
+                                        <i class="fa-solid fa-user-group"></i>
+                                        5 Seats
+                                    </span>
+                                    <span>
+                                        <i class="fa-solid fa-gears"></i>
+                                        Auto
+                                    </span>
+                                </div>
+                                <div class="car-card-footer">
+                                    <div class="car-price">
+                                        <strong>$@car.PricePerDay.ToString("0")</strong>
+                                        <span>/ day</span>
+                                    </div>
+                                    <a asp-controller="Car" asp-action="Details" asp-route-id="@car.Id" class="details-button">
+                                        View Details
+                                        <i class="fa-solid fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="no-results" id="noResults">
+                <i class="fa-solid fa-car-side"></i>
+                <h3>No cars found</h3>
+                <p>We couldn't find any cars matching your current filters.</p>
+                <button class="reset-button no-results-reset" id="noResultsReset" type="button">
+                    <i class="fa-solid fa-rotate-left"></i>
+                    Clear Filters
+                </button>
+            </div>
+        </div>
+    </section>
+</main>

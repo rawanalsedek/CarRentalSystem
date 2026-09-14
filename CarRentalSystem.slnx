@@ -1,3 +1,5 @@
 <Solution>
+  <Project Path="BLogicLayer/BLogicLayer.csproj" />
+  <Project Path="DataAccessLayer/DataAccessLayer.csproj" />
   <Project Path="CarRentalSystem/CarRentalSystem.csproj" />
 </Solution>

@@ -1,0 +1,190 @@
+@model CarDetailsViewModel
+@{
+    ViewData["Title"] = $"{Model.Brand} {Model.Model}";
+    ViewData["PageCss"] = "details.css";
+    ViewData["PageJs"] = "details.js";
+    ViewData["NavbarExtraClass"] = "cars-navbar";
+
+    var image = string.IsNullOrWhiteSpace(Model.ImageUrl)
+        ? "https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=1200&q=85"
+        : Model.ImageUrl;
+    var key = $"{Model.Brand} {Model.Model}";
+    var shortDescription = key switch
+    {
+        "BMW 5 Series" => "A premium sedan that combines comfort, performance, and modern technology for an exceptional driving experience.",
+        "Mercedes C Class" => "An elegant luxury sedan with refined comfort and modern technology for every trip.",
+        "Toyota RAV4" => "A practical and comfortable SUV, ready for city drives and weekend escapes.",
+        "Audi A6" => "A refined executive sedan with a sleek design, advanced features, and smooth performance.",
+        "BMW X5" => "A spacious luxury SUV that pairs powerful performance with comfort for the whole family.",
+        "Toyota Camry" => "A reliable and comfortable sedan that makes every daily drive easy and enjoyable.",
+        _ => "Rent this car for a comfortable, reliable journey with competitive daily rates."
+    };
+    var fullDescription = key switch
+    {
+        "BMW 5 Series" => "The BMW 5 Series offers a perfect balance between luxury, performance, and everyday practicality. Whether you're planning a business trip or a weekend adventure, this car provides a smooth and comfortable ride.",
+        "Mercedes C Class" => "The Mercedes C Class brings together sophisticated design, a comfortable interior, and confident performance for a premium driving experience.",
+        "Toyota RAV4" => "The Toyota RAV4 gives you versatile space, everyday comfort, and dependable performance for every journey.",
+        "Audi A6" => "The Audi A6 blends premium comfort, contemporary design, and confident road handling for business or leisure travel.",
+        "BMW X5" => "The BMW X5 offers generous space, premium amenities, and capable performance for comfortable journeys of any length.",
+        "Toyota Camry" => "The Toyota Camry combines excellent comfort, practical features, and dependable efficiency for city and long-distance travel.",
+        _ => $"{Model.Brand} {Model.Model} is ready for your next trip, with transparent daily pricing and a straightforward booking process."
+    };
+    var isMaintenance = Model.Status == CarStatus.Maintenance;
+    var loginReturnUrl = Url.Action("Details", "Car", new { id = Model.Id });
+}
+
+<main class="details-page">
+    <section class="details-section">
+        <div class="container">
+            <a asp-controller="Car" asp-action="Index" class="back-link">
+                <i class="fa-solid fa-arrow-left"></i>
+                Back to Cars
+            </a>
+
+            <div class="row g-5">
+                <div class="col-lg-7">
+                    <div class="details-image-box">
+                        <img id="detailsCarImage" src="@image" alt="@Model.Brand @Model.Model">
+                        <span class="details-status" id="detailsStatus">
+                            <i class="fa-solid fa-circle"></i>
+                            <span id="detailsStatusText">@Model.Status</span>
+                        </span>
+                    </div>
+                    <div class="specifications-box">
+                        <h3>Car Specifications</h3>
+                        <div class="specifications-grid">
+                            <div class="specification">
+                                <i class="fa-regular fa-calendar"></i>
+                                <div>
+                                    <span>Year</span>
+                                    <strong id="detailsYear">@Model.Year</strong>
+                                </div>
+                            </div>
+                            <div class="specification">
+                                <i class="fa-solid fa-user-group"></i>
+                                <div>
+                                    <span>Seats</span>
+                                    <strong id="detailsSeats">5 Seats</strong>
+                                </div>
+                            </div>
+                            <div class="specification">
+                                <i class="fa-solid fa-gears"></i>
+                                <div>
+                                    <span>Transmission</span>
+                                    <strong id="detailsTransmission">Automatic</strong>
+                                </div>
+                            </div>
+                            <div class="specification">
+                                <i class="fa-solid fa-gas-pump"></i>
+                                <div>
+                                    <span>Fuel</span>
+                                    <strong id="detailsFuel">Gasoline</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="details-booking-card" data-daily-price="@Model.PricePerDay.ToString("0.##")">
+                        <span class="details-brand" id="detailsBrand">@Model.Brand</span>
+                        <h1 id="detailsModel">@Model.Model</h1>
+                        <p class="details-description" id="detailsShortDescription">@shortDescription</p>
+                        <div class="details-price">
+                            <strong id="detailsDailyPrice">$@Model.PricePerDay.ToString("0")</strong>
+                            <span>/ day</span>
+                        </div>
+                        <div class="details-divider"></div>
+
+                        @if (TempData["Error"] != null)
+                        {
+                            <p class="booking-error">@TempData["Error"]</p>
+                        }
+
+                        @if (isMaintenance)
+                        {
+                            <p class="booking-error">This car is under maintenance and cannot be reserved.</p>
+                            <button class="reserve-button" type="button" disabled>
+                                <i class="fa-solid fa-calendar-check"></i>
+                                Unavailable
+                            </button>
+                        }
+                        else if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <form asp-controller="Reservation" asp-action="Create" method="post" id="reservationForm">
+                                <input type="hidden" name="CarId" value="@Model.Id" />
+                                <div class="date-field">
+                                    <label>Pick-up Date</label>
+                                    <div class="date-input">
+                                        <i class="fa-regular fa-calendar"></i>
+                                        <input type="date" id="detailsPickup" name="StartDate" required>
+                                    </div>
+                                </div>
+                                <div class="date-field">
+                                    <label>Drop-off Date</label>
+                                    <div class="date-input">
+                                        <i class="fa-regular fa-calendar"></i>
+                                        <input type="date" id="detailsDropoff" name="EndDate" required>
+                                    </div>
+                                </div>
+                                <div class="total-box">
+                                    <div>
+                                        <span>Total Price</span>
+                                        <small id="daysText">Select your dates</small>
+                                    </div>
+                                    <strong id="totalPrice">$0</strong>
+                                </div>
+                                <button class="reserve-button" id="reserveButton" type="submit">
+                                    <i class="fa-solid fa-calendar-check"></i>
+                                    Reserve Now
+                                </button>
+                            </form>
+                        }
+                        else
+                        {
+                            <div class="date-field">
+                                <label>Pick-up Date</label>
+                                <div class="date-input">
+                                    <i class="fa-regular fa-calendar"></i>
+                                    <input type="date" id="detailsPickup">
+                                </div>
+                            </div>
+                            <div class="date-field">
+                                <label>Drop-off Date</label>
+                                <div class="date-input">
+                                    <i class="fa-regular fa-calendar"></i>
+                                    <input type="date" id="detailsDropoff">
+                                </div>
+                            </div>
+                            <div class="total-box">
+                                <div>
+                                    <span>Total Price</span>
+                                    <small id="daysText">Select your dates</small>
+                                </div>
+                                <strong id="totalPrice">$0</strong>
+                            </div>
+                            <a class="reserve-button" id="reserveButton" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@loginReturnUrl">
+                                <i class="fa-solid fa-calendar-check"></i>
+                                Reserve Now
+                            </a>
+                        }
+
+                        <p class="secure-text">
+                            <i class="fa-solid fa-shield-halved"></i>
+                            Secure booking • No hidden fees
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="car-description-section">
+                <span class="section-small-title">
+                    <i class="fa-solid fa-circle-info"></i>
+                    ABOUT THIS CAR
+                </span>
+                <h2>Drive with confidence</h2>
+                <p id="detailsFullDescription">@fullDescription</p>
+            </div>
+        </div>
+    </section>
+</main>

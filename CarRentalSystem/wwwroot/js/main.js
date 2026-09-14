@@ -53,7 +53,7 @@ if (heroSearchButton) {
 
 
             window.location.href =
-                "pages/cars.html?" +
+                "/Car?" +
                 params.toString();
 
         }

@@ -1,0 +1,26 @@
+@model Car
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Delete Car";
+    ViewData["AdminSection"] = "cars";
+}
+
+<header class="admin-top">
+    <div>
+        <span class="admin-eyebrow">VEHICLE FLEET</span>
+        <h1>Delete Car</h1>
+        <p>Add, edit and manage your vehicle fleet.</p>
+    </div>
+</header>
+
+<form class="modal-box" asp-action="Delete" method="post" style="position:relative; margin:0 auto;">
+    <h2>Delete Car</h2>
+    <p style="color:var(--text-muted); font-size:12px; margin-bottom:18px;">
+        Are you sure you want to delete <strong>@Model.Brand @Model.Model</strong>?
+    </p>
+    <input type="hidden" asp-for="Id" />
+    <div class="modal-actions">
+        <a class="admin-button cancel-modal" asp-action="Manage">Cancel</a>
+        <button class="admin-button" type="submit">Delete</button>
+    </div>
+</form>

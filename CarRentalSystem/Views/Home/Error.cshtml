@@ -1,0 +1,23 @@
+@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<main class="cars-page">
+    <section class="cars-header">
+        <div class="container">
+            <div class="cars-header-content">
+                <span class="section-small-title">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    ERROR
+                </span>
+                <h1>An error occurred while processing your request.</h1>
+                @if (Model.ShowRequestId)
+                {
+                    <p>Request ID: @Model.RequestId</p>
+                }
+                <a asp-controller="Home" asp-action="Index" class="btn primary-button">Back to Home</a>
+            </div>
+        </div>
+    </section>
+</main>

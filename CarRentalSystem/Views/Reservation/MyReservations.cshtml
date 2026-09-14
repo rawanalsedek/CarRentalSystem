@@ -1,0 +1,141 @@
+@model IEnumerable<Reservation>
+@{
+    ViewData["Title"] = "My Reservations";
+    ViewData["PageCss"] = "reservations.css";
+    ViewData["PageJs"] = "reservations.js";
+
+    var reservations = Model.ToList();
+    var upcoming = reservations.Count(r =>
+        (r.Status == ReservationStatus.Pending || r.Status == ReservationStatus.Approved) &&
+        r.EndDate.Date >= DateTime.Today);
+    var completed = reservations.Count(r =>
+        r.Status == ReservationStatus.Completed ||
+        r.Status == ReservationStatus.Rejected ||
+        r.Status == ReservationStatus.Cancelled ||
+        r.EndDate.Date < DateTime.Today);
+
+    string StatusClass(ReservationStatus status) => status.ToString().ToLowerInvariant();
+
+    string TripKind(Reservation reservation)
+    {
+        if ((reservation.Status == ReservationStatus.Pending || reservation.Status == ReservationStatus.Approved) &&
+            reservation.EndDate.Date >= DateTime.Today)
+        {
+            return "upcoming";
+        }
+
+        return "completed";
+    }
+
+    int Duration(Reservation reservation)
+    {
+        var days = (reservation.EndDate.Date - reservation.StartDate.Date).Days;
+        return days < 1 ? 1 : days;
+    }
+}
+
+<main class="reservations-page">
+    <div class="reservations-background" aria-hidden="true"></div>
+
+    <section class="reservations-header">
+        <div class="container">
+            <span class="section-small-title"><i class="fa-solid fa-calendar-check"></i> MY RESERVATIONS</span>
+            <h1>Manage your <span>journeys</span></h1>
+            <p>Track your bookings and manage your upcoming trips.</p>
+        </div>
+    </section>
+
+    <section class="reservation-summary">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <article class="summary-card">
+                        <div class="summary-icon"><i class="fa-solid fa-calendar-check"></i></div>
+                        <div><strong id="totalReservations">@reservations.Count</strong><span>Total Reservations</span></div>
+                    </article>
+                </div>
+                <div class="col-md-4">
+                    <article class="summary-card">
+                        <div class="summary-icon"><i class="fa-solid fa-car"></i></div>
+                        <div><strong id="upcomingTrips">@upcoming</strong><span>Upcoming Trips</span></div>
+                    </article>
+                </div>
+                <div class="col-md-4">
+                    <article class="summary-card">
+                        <div class="summary-icon"><i class="fa-solid fa-circle-check"></i></div>
+                        <div><strong id="completedTrips">@completed</strong><span>Completed Trips</span></div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="reservations-list">
+        <div class="container">
+            <div class="reservations-list-heading">
+                <div>
+                    <h2>Your bookings</h2>
+                    <p>Here is a complete overview of your reservations.</p>
+                </div>
+            </div>
+
+            <div class="reservation-cards" id="reservationCards">
+                @foreach (var reservation in reservations)
+                {
+                    var brand = reservation.Car?.Brand ?? "Car";
+                    var carModel = reservation.Car?.Model ?? "";
+                    var image = string.IsNullOrWhiteSpace(reservation.Car?.ImageUrl)
+                        ? "https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=800&q=85"
+                        : reservation.Car!.ImageUrl;
+                    var canCancel = reservation.Status == ReservationStatus.Pending ||
+                                    reservation.Status == ReservationStatus.Approved;
+
+                    <article class="reservation-card" data-trip="@TripKind(reservation)">
+                        <div class="reservation-image">
+                            <img src="@image" alt="@brand @carModel">
+                        </div>
+                        <div class="reservation-content">
+                            <div class="reservation-title-row">
+                                <div>
+                                    <span class="reservation-brand">@brand</span>
+                                    <h3>@carModel</h3>
+                                    <p class="reservation-specs">@reservation.Car?.Year <span>•</span> Automatic <span>•</span> 5 Seats</p>
+                                </div>
+                                <span class="reservation-status @StatusClass(reservation.Status)">@reservation.Status</span>
+                            </div>
+                            <div class="reservation-dates">
+                                <div>
+                                    <span>Pick-up</span>
+                                    <strong>@reservation.StartDate.ToString("dd MMM yyyy")</strong>
+                                </div>
+                                <div>
+                                    <span>Drop-off</span>
+                                    <strong>@reservation.EndDate.ToString("dd MMM yyyy")</strong>
+                                </div>
+                                <div>
+                                    <span>Duration</span>
+                                    <strong>@Duration(reservation) Days</strong>
+                                </div>
+                                <div>
+                                    <span>Total</span>
+                                    <strong class="reservation-total">$@reservation.TotalPrice.ToString("0")</strong>
+                                </div>
+                            </div>
+                            <div class="reservation-actions">
+                                <a asp-controller="Car" asp-action="Details" asp-route-id="@reservation.CarId" class="view-reservation">
+                                    View Details <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+                                @if (canCancel)
+                                {
+                                    <form asp-controller="Reservation" asp-action="Cancel" asp-route-id="@reservation.Id" method="post">
+                                        <button class="cancel-reservation" type="submit">Cancel</button>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+                    </article>
+                }
+            </div>
+        </div>
+    </section>
+</main>

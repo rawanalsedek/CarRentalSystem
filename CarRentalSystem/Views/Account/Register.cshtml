@@ -1,0 +1,67 @@
+@model RegisterVm
+@{
+    ViewData["Title"] = "Sign Up";
+    ViewData["PageCss"] = "signup.css";
+    ViewData["PageJs"] = "signup.js";
+}
+
+<main class="auth-page signup-page">
+    <div class="auth-background" aria-hidden="true"></div>
+    <div class="container auth-container">
+        <section class="login-card signup-card" aria-labelledby="signupTitle">
+            <div class="login-card-icon"><i class="fa-solid fa-car-side"></i></div>
+            <span class="auth-eyebrow">CREATE ACCOUNT</span>
+            <h1 id="signupTitle">Create your DriveRent account</h1>
+            <p class="auth-intro">Join DriveRent and start your journey today.</p>
+
+            <form class="login-form signup-form" id="signupForm" asp-action="Register" method="post" novalidate>
+                <div asp-validation-summary="ModelOnly" class="auth-errors"></div>
+
+                <label for="fullName">Full Name</label>
+                <div class="auth-input">
+                    <i class="fa-regular fa-user"></i>
+                    <input asp-for="UserName" id="fullName" placeholder="Enter your full name" autocomplete="name" required>
+                </div>
+                <small class="field-error" id="fullNameError"></small>
+                <span asp-validation-for="UserName" class="field-error"></span>
+
+                <label for="email">Email address</label>
+                <div class="auth-input">
+                    <i class="fa-regular fa-envelope"></i>
+                    <input asp-for="Email" id="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+                </div>
+                <small class="field-error" id="emailError"></small>
+                <span asp-validation-for="Email" class="field-error"></span>
+
+                <label for="password">Password</label>
+                <div class="auth-input">
+                    <i class="fa-solid fa-lock"></i>
+                    <input asp-for="Password" id="password" placeholder="Create a password" autocomplete="new-password" minlength="8" required>
+                </div>
+                <small class="field-error" id="passwordError"></small>
+                <span asp-validation-for="Password" class="field-error"></span>
+
+                <label for="confirmPassword">Confirm Password</label>
+                <div class="auth-input">
+                    <i class="fa-solid fa-lock"></i>
+                    <input asp-for="confirmPassword" id="confirmPassword" placeholder="Confirm your password" autocomplete="new-password" required>
+                </div>
+                <small class="field-error" id="confirmPasswordError"></small>
+                <span asp-validation-for="confirmPassword" class="field-error"></span>
+
+                <label class="terms-option" for="agreeTerms">
+                    <input id="agreeTerms" type="checkbox" name="agreeTerms" required>
+                    <span>I agree to the <a href="#">Terms &amp; Conditions</a></span>
+                </label>
+                <small class="field-error" id="agreeTermsError"></small>
+
+                <button class="auth-submit" type="submit">
+                    Create Account <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+            </form>
+
+            <p class="register-prompt">Already have an account? <a asp-action="Login">Login</a></p>
+        </section>
+    </div>
+</main>

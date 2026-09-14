@@ -24,7 +24,6 @@ if (signupForm) {
     }
 
     function validateForm() {
-        let isValid = true;
         const fullName = fields.fullName.value.trim();
         const email = fields.email.value.trim();
         const password = fields.password.value;
@@ -36,19 +35,17 @@ if (signupForm) {
         showFieldError("confirmPassword", password === confirmPassword && confirmPassword ? "" : "Passwords do not match.");
         showFieldError("agreeTerms", fields.agreeTerms.checked ? "" : "Please agree to the Terms & Conditions.");
 
-        isValid = Boolean(fullName) && Boolean(email) && fields.email.validity.valid && password.length >= 8 && password === confirmPassword && fields.agreeTerms.checked;
-        return isValid;
+        return Boolean(fullName) && Boolean(email) && fields.email.validity.valid && password.length >= 8 && password === confirmPassword && fields.agreeTerms.checked;
     }
 
     signupForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-        formStatus.textContent = "";
-
-        if (!validateForm()) {
-            return;
+        if (formStatus) {
+            formStatus.textContent = "";
         }
 
-        formStatus.textContent = "Form validated. Account creation will be connected to ASP.NET Identity.";
+        if (!validateForm()) {
+            event.preventDefault();
+        }
     });
 
     Object.entries(fields).forEach(([fieldName, field]) => {

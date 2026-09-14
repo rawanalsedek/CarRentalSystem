@@ -1,0 +1,19 @@
+@{
+    ViewData["Title"] = "Access Denied";
+}
+
+<main class="cars-page">
+    <section class="cars-header">
+        <div class="container">
+            <div class="cars-header-content">
+                <span class="section-small-title">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    ACCESS DENIED
+                </span>
+                <h1>You do not have permission to view this page.</h1>
+                <p>Please login with an account that has the required role, or go back to Home.</p>
+                <a asp-controller="Home" asp-action="Index" class="btn primary-button">Back to Home</a>
+            </div>
+        </div>
+    </section>
+</main>

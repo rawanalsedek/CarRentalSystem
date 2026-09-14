@@ -1,0 +1,59 @@
+@model CarFormViewModel
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = Model.Id == 0 ? "Add Car" : "Edit Car";
+    ViewData["AdminSection"] = "cars";
+}
+
+<header class="admin-top">
+    <div>
+        <span class="admin-eyebrow">VEHICLE FLEET</span>
+        <h1>@(Model.Id == 0 ? "Add New Car" : "Edit Car")</h1>
+        <p>Add, edit and manage your vehicle fleet.</p>
+    </div>
+</header>
+
+<form class="modal-box" asp-action="@(Model.Id == 0 ? "Create" : "Edit")" method="post" style="position:relative; margin:0 auto;">
+    <h2>@(Model.Id == 0 ? "Add New Car" : "Edit Car")</h2>
+    <div asp-validation-summary="All" class="auth-errors"></div>
+    <input type="hidden" asp-for="Id" />
+    <div class="modal-field">
+        <label>Car Image</label>
+        <input asp-for="ImageUrl" type="text" placeholder="Image URL">
+    </div>
+    <div class="modal-field">
+        <label>Brand</label>
+        <input asp-for="Brand" placeholder="BMW">
+        <span asp-validation-for="Brand" class="field-error"></span>
+    </div>
+    <div class="modal-field">
+        <label>Category</label>
+        <select asp-for="CategoryId" asp-items="ViewBag.Categories">
+            <option value="">Select category</option>
+        </select>
+        <span asp-validation-for="CategoryId" class="field-error"></span>
+    </div>
+    <div class="modal-field">
+        <label>Model</label>
+        <input asp-for="Model" placeholder="5 Series">
+        <span asp-validation-for="Model" class="field-error"></span>
+    </div>
+    <div class="modal-field">
+        <label>Year</label>
+        <input asp-for="Year" placeholder="2026">
+        <span asp-validation-for="Year" class="field-error"></span>
+    </div>
+    <div class="modal-field">
+        <label>Daily Price</label>
+        <input asp-for="PricePerDay" placeholder="95">
+        <span asp-validation-for="PricePerDay" class="field-error"></span>
+    </div>
+    <div class="modal-field">
+        <label>Status</label>
+        <select asp-for="Status" asp-items="Html.GetEnumSelectList<CarStatus>()"></select>
+    </div>
+    <div class="modal-actions">
+        <a class="admin-button cancel-modal" asp-action="Manage">Cancel</a>
+        <button class="admin-button" type="submit">Save Car</button>
+    </div>
+</form>

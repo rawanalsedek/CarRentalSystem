@@ -1,0 +1,133 @@
+@model IEnumerable<Car>
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Cars";
+    ViewData["AdminSection"] = "cars";
+
+    var cars = Model.ToList();
+    var available = cars.Count(c => c.Status == CarStatus.Available);
+    var rented = cars.Count(c => c.Status == CarStatus.Rented);
+    var maintenance = cars.Count(c => c.Status == CarStatus.Maintenance);
+
+    string StatusClass(CarStatus status) => status.ToString().ToLowerInvariant();
+}
+
+<header class="admin-top">
+    <div>
+        <span class="admin-eyebrow">VEHICLE FLEET</span>
+        <h1>Manage Cars</h1>
+        <p>Add, edit and manage your vehicle fleet.</p>
+    </div>
+    <a class="admin-button" asp-controller="Car" asp-action="Create">
+        <i class="fa-solid fa-plus"></i>
+        Add New Car
+    </a>
+</header>
+
+@if (TempData["Error"] != null)
+{
+    <p class="admin-alert">@TempData["Error"]</p>
+}
+
+<section class="admin-stats row g-3">
+    <div class="col-lg-3 col-6">
+        <article class="admin-stat">
+            <div>
+                <span>Total Cars</span>
+                <strong>@cars.Count</strong>
+            </div>
+            <i class="fa-solid fa-car"></i>
+        </article>
+    </div>
+    <div class="col-lg-3 col-6">
+        <article class="admin-stat green">
+            <div>
+                <span>Available</span>
+                <strong>@available</strong>
+            </div>
+            <i class="fa-solid fa-circle-check"></i>
+        </article>
+    </div>
+    <div class="col-lg-3 col-6">
+        <article class="admin-stat orange">
+            <div>
+                <span>Rented</span>
+                <strong>@rented</strong>
+            </div>
+            <i class="fa-solid fa-key"></i>
+        </article>
+    </div>
+    <div class="col-lg-3 col-6">
+        <article class="admin-stat">
+            <div>
+                <span>Maintenance</span>
+                <strong>@maintenance</strong>
+            </div>
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+        </article>
+    </div>
+</section>
+
+<section class="admin-panel">
+    <div class="admin-toolbar">
+        <div class="admin-search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input data-admin-search=".cars-row" placeholder="Search by car name...">
+        </div>
+        <select class="admin-filter">
+            <option>Brand</option>
+        </select>
+        <select class="admin-filter">
+            <option>Category</option>
+        </select>
+        <select class="admin-filter">
+            <option>Status</option>
+        </select>
+    </div>
+    <div class="admin-table-wrap">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Car</th>
+                    <th>Brand</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var car in cars)
+                {
+                    var image = string.IsNullOrWhiteSpace(car.ImageUrl)
+                        ? "https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=160&q=80"
+                        : car.ImageUrl;
+                    <tr class="cars-row">
+                        <td>
+                            <img class="table-car" src="@image" alt="@car.Brand">
+                        </td>
+                        <td>@car.Model</td>
+                        <td>@car.Brand</td>
+                        <td>@car.Category?.Name</td>
+                        <td>$@car.PricePerDay.ToString("0")</td>
+                        <td>
+                            <span class="status @StatusClass(car.Status)">@car.Status</span>
+                        </td>
+                        <td>
+                            <a class="icon-action" asp-controller="Car" asp-action="Details" asp-route-id="@car.Id" title="View">
+                                <i class="fa-solid fa-eye"></i>
+                            </a>
+                            <a class="icon-action" asp-controller="Car" asp-action="Edit" asp-route-id="@car.Id" title="Edit">
+                                <i class="fa-solid fa-pen"></i>
+                            </a>
+                            <a class="icon-action delete" asp-controller="Car" asp-action="Delete" asp-route-id="@car.Id" title="Delete">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
