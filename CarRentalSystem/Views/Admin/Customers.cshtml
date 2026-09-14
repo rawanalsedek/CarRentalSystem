@@ -1,0 +1,87 @@
+@model IEnumerable<CustomerViewModel>
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Customers";
+    ViewData["AdminSection"] = "customers";
+    var customers = Model.ToList();
+    var activeReservations = ViewBag.ActiveReservations as int? ?? 0;
+}
+
+<header class="admin-top">
+    <div>
+        <span class="admin-eyebrow">CUSTOMER DIRECTORY</span>
+        <h1>Customers</h1>
+        <p>View and manage registered DriveRent customers.</p>
+    </div>
+</header>
+
+<section class="admin-stats row g-3">
+    <div class="col-lg-4 col-sm-6">
+        <article class="admin-stat">
+            <div>
+                <span>Total Customers</span>
+                <strong>@customers.Count</strong>
+            </div>
+            <i class="fa-solid fa-users"></i>
+        </article>
+    </div>
+    <div class="col-lg-4 col-sm-6">
+        <article class="admin-stat green">
+            <div>
+                <span>New This Month</span>
+                <strong>@customers.Count</strong>
+            </div>
+            <i class="fa-solid fa-user-plus"></i>
+        </article>
+    </div>
+    <div class="col-lg-4 col-sm-6">
+        <article class="admin-stat orange">
+            <div>
+                <span>Active Reservations</span>
+                <strong>@activeReservations</strong>
+            </div>
+            <i class="fa-solid fa-calendar-days"></i>
+        </article>
+    </div>
+</section>
+
+<section class="admin-panel">
+    <div class="admin-toolbar">
+        <div class="admin-search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input data-admin-search=".customer-row" placeholder="Search customer name or email...">
+        </div>
+    </div>
+    <div class="admin-table-wrap">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Customer</th>
+                    <th>Email</th>
+                    <th>Reservations</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var customer in customers)
+                {
+                    <tr class="customer-row">
+                        <td>
+                            <span class="table-avatar">
+                                <i class="fa-solid fa-user"></i>
+                            </span>
+                            @customer.UserName
+                        </td>
+                        <td>@customer.Email</td>
+                        <td>@customer.ReservationsCount</td>
+                        <td>
+                            <span class="icon-action" title="View">
+                                <i class="fa-solid fa-eye"></i>
+                            </span>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

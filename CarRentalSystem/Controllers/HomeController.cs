@@ -1,12 +1,38 @@
+using BLogicLayer.Interfaces;
 using CarRentalSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace CarRentalSystem.Controllers
+namespace PresentationLayer.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ICarService _carService;
+
+        public HomeController(ICarService carService)
+        {
+            _carService = carService;
+        }
+
         public IActionResult Index()
+        {
+            ViewBag.Brands = _carService.GetAll()
+                .Select(c => c.Brand)
+                .Where(b => !string.IsNullOrWhiteSpace(b))
+                .Select(b => b!)
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .OrderBy(b => b)
+                .ToList();
+
+            return View();
+        }
+
+        public IActionResult About()
+        {
+            return View();
+        }
+
+        public IActionResult Contact()
         {
             return View();
         }

@@ -107,7 +107,7 @@ function filterCars() {
 
 
         const name =
-            car.dataset.name.toLowerCase();
+            (car.dataset.name || "").toLowerCase();
 
 
         const matchesSearch =

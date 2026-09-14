@@ -1,0 +1,136 @@
+@model IEnumerable<Reservation>
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Reservations";
+    ViewData["AdminSection"] = "reservations";
+
+    var reservations = Model.ToList();
+    var pending = reservations.Count(r => r.Status == ReservationStatus.Pending);
+    var approved = reservations.Count(r => r.Status == ReservationStatus.Approved);
+    var rejected = reservations.Count(r => r.Status == ReservationStatus.Rejected);
+}
+
+<header class="admin-top">
+    <div>
+        <span class="admin-eyebrow">RENTAL REQUESTS</span>
+        <h1>Reservations</h1>
+        <p>Manage customer bookings and rental requests.</p>
+    </div>
+</header>
+
+<section class="admin-stats row g-3">
+    <div class="col-lg-3 col-6">
+        <article class="admin-stat">
+            <div>
+                <span>Total</span>
+                <strong>@reservations.Count</strong>
+            </div>
+            <i class="fa-solid fa-calendar-check"></i>
+        </article>
+    </div>
+    <div class="col-lg-3 col-6">
+        <article class="admin-stat orange">
+            <div>
+                <span>Pending</span>
+                <strong>@pending</strong>
+            </div>
+            <i class="fa-solid fa-hourglass-half"></i>
+        </article>
+    </div>
+    <div class="col-lg-3 col-6">
+        <article class="admin-stat green">
+            <div>
+                <span>Approved</span>
+                <strong>@approved</strong>
+            </div>
+            <i class="fa-solid fa-circle-check"></i>
+        </article>
+    </div>
+    <div class="col-lg-3 col-6">
+        <article class="admin-stat">
+            <div>
+                <span>Rejected</span>
+                <strong>@rejected</strong>
+            </div>
+            <i class="fa-solid fa-circle-xmark"></i>
+        </article>
+    </div>
+</section>
+
+<section class="admin-panel">
+    <div class="admin-toolbar">
+        <div class="admin-search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input data-admin-search=".reservation-row" placeholder="Search customer or car...">
+        </div>
+        <select class="admin-filter">
+            <option>Status</option>
+            <option>Pending</option>
+            <option>Approved</option>
+        </select>
+        <select class="admin-filter">
+            <option>Date</option>
+            <option>Latest</option>
+        </select>
+    </div>
+    <div class="admin-table-wrap">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Customer</th>
+                    <th>Car</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var reservation in reservations)
+                {
+                    <tr class="reservation-row">
+                        <td>
+                            @reservation.User?.UserName
+                            <br>
+                            <small>@reservation.User?.Email</small>
+                        </td>
+                        <td>@reservation.Car?.Brand @reservation.Car?.Model</td>
+                        <td>@reservation.StartDate.ToString("dd MMM")</td>
+                        <td>@reservation.EndDate.ToString("dd MMM")</td>
+                        <td>$@reservation.TotalPrice.ToString("0")</td>
+                        <td>
+                            <span class="status @reservation.Status.ToString().ToLowerInvariant()">@reservation.Status</span>
+                        </td>
+                        <td>
+                            @if (reservation.Status == ReservationStatus.Pending)
+                            {
+                                <form asp-action="Approve" asp-route-id="@reservation.Id" method="post">
+                                    <button class="icon-action approve" type="submit" title="Approve">
+                                        <i class="fa-solid fa-check"></i>
+                                    </button>
+                                </form>
+                                <form asp-action="Reject" asp-route-id="@reservation.Id" method="post">
+                                    <button class="icon-action reject" type="submit" title="Reject">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </button>
+                                </form>
+                            }
+                            @if (reservation.Status == ReservationStatus.Approved)
+                            {
+                                <form asp-action="Complete" asp-route-id="@reservation.Id" method="post">
+                                    <button class="icon-action approve" type="submit" title="Complete">
+                                        <i class="fa-solid fa-flag-checkered"></i>
+                                    </button>
+                                </form>
+                            }
+                            <a class="icon-action" asp-action="Details" asp-route-id="@reservation.Id" title="View">
+                                <i class="fa-solid fa-eye"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

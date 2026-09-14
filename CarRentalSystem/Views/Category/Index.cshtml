@@ -1,0 +1,69 @@
+@model IEnumerable<Category>
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Categories";
+    ViewData["AdminSection"] = "categories";
+
+    string Icon(string? name) => (name ?? "").ToLowerInvariant() switch
+    {
+        "suv" => "fa-solid fa-truck-monster",
+        "luxury" => "fa-solid fa-gem",
+        "sports" => "fa-solid fa-gauge-high",
+        "economy" => "fa-solid fa-money-bill-wave",
+        _ => "fa-solid fa-car-side"
+    };
+
+    string Blurb(string? name) => (name ?? "").ToLowerInvariant() switch
+    {
+        "sedan" => "Comfortable everyday vehicles made for smooth city and business rides.",
+        "suv" => "Spacious and capable vehicles for family trips and bigger adventures.",
+        "luxury" => "Premium vehicles offering refined comfort, design and performance.",
+        "sports" => "Dynamic performance cars for an unforgettable driving experience.",
+        "economy" => "Reliable and affordable choices for practical everyday travel.",
+        _ => "Vehicles grouped for easier browsing and booking."
+    };
+}
+
+<header class="admin-top">
+    <div>
+        <span class="admin-eyebrow">VEHICLE GROUPS</span>
+        <h1>Categories</h1>
+        <p>Organize your vehicles into clear categories.</p>
+    </div>
+    <a class="admin-button" asp-action="Create">
+        <i class="fa-solid fa-plus"></i>
+        Add Category
+    </a>
+</header>
+
+@if (TempData["Error"] != null)
+{
+    <p class="admin-alert">@TempData["Error"]</p>
+}
+
+<section class="row g-4">
+    @foreach (var category in Model)
+    {
+        var count = category.Cars?.Count ?? 0;
+        <div class="col-xl-4 col-md-6">
+            <article class="category-card">
+                <div class="category-icon">
+                    <i class="@Icon(category.Name)"></i>
+                </div>
+                <h2>@category.Name</h2>
+                <p>@Blurb(category.Name)</p>
+                <footer>
+                    <span>@count Cars</span>
+                    <div>
+                        <a class="icon-action" asp-action="Edit" asp-route-id="@category.Id">
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+                        <a class="icon-action delete" asp-action="Delete" asp-route-id="@category.Id">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </div>
+                </footer>
+            </article>
+        </div>
+    }
+</section>

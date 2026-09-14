@@ -259,7 +259,12 @@
 .reservation-status.approved { color: #6ee7b7; background: rgba(16, 185, 129, 0.14); border: 1px solid rgba(16, 185, 129, 0.24); }
 .reservation-status.pending { color: #fbbf24; background: rgba(245, 158, 11, 0.14); border: 1px solid rgba(245, 158, 11, 0.24); }
 .reservation-status.rejected { color: #fca5a5; background: rgba(239, 68, 68, 0.14); border: 1px solid rgba(239, 68, 68, 0.24); }
-.reservation-status.cancelled { color: #cbd5e1; background: rgba(148, 163, 184, 0.13); border: 1px solid rgba(148, 163, 184, 0.22); }
+.reservation-status.cancelled,
+.reservation-status.completed { color: #cbd5e1; background: rgba(148, 163, 184, 0.13); border: 1px solid rgba(148, 163, 184, 0.22); }
+
+.reservation-actions form {
+    margin: 0;
+}
 
 .reservation-dates {
     display: grid;

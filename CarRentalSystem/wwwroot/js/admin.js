@@ -21,12 +21,3 @@ document.querySelectorAll("[data-admin-search]").forEach((input) => {
         });
     });
 });
-
-document.querySelectorAll("[data-reservation-action]").forEach((button) => {
-    button.addEventListener("click", () => {
-        const status = button.closest("tr").querySelector(".status");
-        const action = button.dataset.reservationAction;
-        status.className = `status ${action}`;
-        status.textContent = action[0].toUpperCase() + action.slice(1);
-    });
-});

@@ -1,8 +1,99 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Car Rental";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="hero-section">
+    <div class="hero-background"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-glow"></div>
+    <div class="container hero-content">
+        <div class="hero-text">
+            <span class="hero-small-title">
+                <i class="fa-solid fa-road"></i>
+                Your journey starts here
+            </span>
+            <h1>
+                Drive Your
+                <span>Next Adventure</span>
+            </h1>
+            <p>
+                Rent the perfect car for your journey.
+                Easy booking, competitive prices, and a wide range of vehicles.
+            </p>
+        </div>
+        <div class="booking-box">
+            <div class="booking-item">
+                <i class="fa-regular fa-calendar"></i>
+                <div>
+                    <span>Pick-up Date</span>
+                    <input type="date" id="pickupDate">
+                </div>
+            </div>
+            <div class="booking-item">
+                <i class="fa-regular fa-calendar"></i>
+                <div>
+                    <span>Drop-off Date</span>
+                    <input type="date" id="dropoffDate">
+                </div>
+            </div>
+            <div class="booking-item">
+                <i class="fa-solid fa-car"></i>
+                <div>
+                    <span>Brand</span>
+                    <select id="heroBrand">
+                        <option value="all">All Brands</option>
+                        @if (ViewBag.Brands is IEnumerable<string> brands)
+                        {
+                            foreach (var brand in brands)
+                            {
+                                <option value="@brand.ToLowerInvariant()">@brand</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <button class="search-button" id="heroSearchButton" type="button">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                Search Cars
+            </button>
+        </div>
+        <div class="hero-features">
+            <div class="hero-feature">
+                <div class="feature-icon">
+                    <i class="fa-solid fa-car"></i>
+                </div>
+                <div>
+                    <h6>Wide Selection</h6>
+                    <span>Top brands & models</span>
+                </div>
+            </div>
+            <div class="hero-feature">
+                <div class="feature-icon">
+                    <i class="fa-solid fa-tag"></i>
+                </div>
+                <div>
+                    <h6>Best Prices</h6>
+                    <span>Competitive rates</span>
+                </div>
+            </div>
+            <div class="hero-feature">
+                <div class="feature-icon">
+                    <i class="fa-solid fa-headset"></i>
+                </div>
+                <div>
+                    <h6>24/7 Support</h6>
+                    <span>We're always here</span>
+                </div>
+            </div>
+            <div class="hero-feature">
+                <div class="feature-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div>
+                    <h6>Secure Booking</h6>
+                    <span>Your data is safe</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

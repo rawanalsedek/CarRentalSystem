@@ -1,0 +1,104 @@
+@{
+    ViewData["Title"] = "About Us";
+    ViewData["PageCss"] = "about.css";
+}
+
+<main class="about-page">
+    <section class="about-hero">
+        <div class="about-hero-image" aria-hidden="true"></div>
+        <div class="container about-hero-content">
+            <span class="section-small-title">
+                <i class="fa-solid fa-road"></i>
+                ABOUT DRIVERENT
+            </span>
+            <h1>Every journey deserves a <span>better start.</span></h1>
+            <p>We make car rental simple, reliable, and enjoyable—so you can focus on where the road takes you.</p>
+        </div>
+    </section>
+
+    <section class="about-story">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <div class="about-image">
+                        <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1200&q=85" alt="Premium car on the road">
+                        <div class="about-image-badge">
+                            <strong>24/7</strong>
+                            <span>Support for every trip</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <span class="section-small-title">
+                        <i class="fa-solid fa-compass"></i>
+                        OUR STORY
+                    </span>
+                    <h2>Freedom to move, confidence to explore.</h2>
+                    <p>DriveRent was built around one simple idea: renting a car should feel as effortless as driving it. Our curated fleet gives every traveler a dependable option for business, weekends, and everything in between.</p>
+                    <p>From transparent pricing to responsive support, every detail is designed to keep your journey moving.</p>
+                    <div class="about-values">
+                        <div>
+                            <i class="fa-solid fa-shield-halved"></i>
+                            <span>
+                                <strong>Reliable vehicles</strong>
+                                Inspected and ready to go
+                            </span>
+                        </div>
+                        <div>
+                            <i class="fa-solid fa-tag"></i>
+                            <span>
+                                <strong>Clear pricing</strong>
+                                No hidden surprises
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-stats">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <article>
+                        <i class="fa-solid fa-car"></i>
+                        <strong>24+</strong>
+                        <span>Premium Vehicles</span>
+                    </article>
+                </div>
+                <div class="col-md-4">
+                    <article>
+                        <i class="fa-solid fa-face-smile"></i>
+                        <strong>150+</strong>
+                        <span>Happy Customers</span>
+                    </article>
+                </div>
+                <div class="col-md-4">
+                    <article>
+                        <i class="fa-solid fa-route"></i>
+                        <strong>10K+</strong>
+                        <span>Road Miles Shared</span>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-cta">
+        <div class="container">
+            <div>
+                <span class="section-small-title">
+                    <i class="fa-solid fa-key"></i>
+                    READY TO DRIVE?
+                </span>
+                <h2>Your next trip is waiting.</h2>
+                <p>Find a car that fits your plans and reserve it in just a few clicks.</p>
+            </div>
+            <a class="btn primary-button" asp-controller="Car" asp-action="Index">
+                Explore Cars
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </section>
+</main>

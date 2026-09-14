@@ -461,6 +461,28 @@
 }
 
 
+a.reserve-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+}
+
+.reserve-button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.booking-error {
+    margin: 0 0 12px;
+    color: #fca5a5;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
 .reserve-button i {
     margin-right: 7px;
 }

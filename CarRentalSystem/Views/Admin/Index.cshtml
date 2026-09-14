@@ -1,0 +1,136 @@
+@model DashboardViewModel
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Dashboard";
+    ViewData["AdminSection"] = "dashboard";
+    var recent = ViewBag.RecentReservations as IEnumerable<Reservation> ?? Enumerable.Empty<Reservation>();
+}
+
+<header class="admin-top">
+    <div>
+        <span class="admin-eyebrow">DASHBOARD</span>
+        <h1>
+            Good morning, Admin
+            <span>👋</span>
+        </h1>
+        <p>Here's what's happening with your rental business today.</p>
+    </div>
+    <span class="admin-date">
+        <i class="fa-regular fa-calendar"></i>
+        @DateTime.Now.ToString("dd MMM yyyy")
+    </span>
+</header>
+
+<section class="admin-stats row g-3">
+    <div class="col-xl-3 col-sm-6">
+        <article class="admin-stat">
+            <div>
+                <span>Total Cars</span>
+                <strong>@Model.CarsCount</strong>
+            </div>
+            <i class="fa-solid fa-car"></i>
+        </article>
+    </div>
+    <div class="col-xl-3 col-sm-6">
+        <article class="admin-stat green">
+            <div>
+                <span>Customers</span>
+                <strong>@Model.CustomersCount</strong>
+            </div>
+            <i class="fa-solid fa-users"></i>
+        </article>
+    </div>
+    <div class="col-xl-3 col-sm-6">
+        <article class="admin-stat">
+            <div>
+                <span>Reservations</span>
+                <strong>@Model.ReservationsCount</strong>
+            </div>
+            <i class="fa-solid fa-calendar-check"></i>
+        </article>
+    </div>
+    <div class="col-xl-3 col-sm-6">
+        <article class="admin-stat orange">
+            <div>
+                <span>Pending</span>
+                <strong>@Model.PendingReservationsCount</strong>
+            </div>
+            <i class="fa-solid fa-hourglass-half"></i>
+        </article>
+    </div>
+</section>
+
+<section class="admin-dashboard-grid">
+    <article class="admin-panel">
+        <div class="admin-panel-head">
+            <h2>Reservation Overview</h2>
+            <span class="admin-date">@DateTime.Now.Year</span>
+        </div>
+        <div class="chart">
+            <div class="chart-bar" style="height:42%"><span>22</span><small>Jan</small></div>
+            <div class="chart-bar" style="height:63%"><span>33</span><small>Feb</small></div>
+            <div class="chart-bar" style="height:54%"><span>28</span><small>Mar</small></div>
+            <div class="chart-bar" style="height:82%"><span>43</span><small>Apr</small></div>
+            <div class="chart-bar" style="height:70%"><span>37</span><small>May</small></div>
+            <div class="chart-bar" style="height:91%"><span>48</span><small>Jun</small></div>
+        </div>
+    </article>
+    <article class="admin-panel">
+        <div class="admin-panel-head">
+            <h2>Popular Cars</h2>
+        </div>
+        <div class="popular-list">
+            <div class="popular-item">
+                <span>BMW 5 Series</span>
+                <div class="popular-bar"><i style="width:92%"></i></div>
+            </div>
+            <div class="popular-item">
+                <span>Mercedes C-Class</span>
+                <div class="popular-bar"><i style="width:78%"></i></div>
+            </div>
+            <div class="popular-item">
+                <span>Audi A6</span>
+                <div class="popular-bar"><i style="width:64%"></i></div>
+            </div>
+            <div class="popular-item">
+                <span>Toyota Camry</span>
+                <div class="popular-bar"><i style="width:48%"></i></div>
+            </div>
+        </div>
+    </article>
+</section>
+
+<section class="admin-panel">
+    <div class="admin-panel-head">
+        <h2>Recent Reservations</h2>
+        <a asp-controller="Reservation" asp-action="Index">
+            View All
+            <i class="fa-solid fa-arrow-right"></i>
+        </a>
+    </div>
+    <div class="admin-table-wrap">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Customer</th>
+                    <th>Car</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var reservation in recent)
+                {
+                    <tr>
+                        <td>@reservation.User?.UserName</td>
+                        <td>@reservation.Car?.Brand @reservation.Car?.Model</td>
+                        <td>@reservation.StartDate.ToString("dd MMM")</td>
+                        <td>
+                            <span class="status @reservation.Status.ToString().ToLowerInvariant()">@reservation.Status</span>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

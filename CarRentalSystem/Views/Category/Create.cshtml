@@ -1,0 +1,32 @@
+@model CategoryFormViewModel
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Add Category";
+    ViewData["AdminSection"] = "categories";
+}
+
+<header class="admin-top">
+    <div>
+        <span class="admin-eyebrow">VEHICLE GROUPS</span>
+        <h1>Categories</h1>
+        <p>Organize your vehicles into clear categories.</p>
+    </div>
+</header>
+
+<form class="modal-box" asp-action="Create" method="post" style="position:relative; margin:0 auto;">
+    <h2>Add New Category</h2>
+    <div asp-validation-summary="All" class="auth-errors"></div>
+    <div class="modal-field">
+        <label>Category Name</label>
+        <input asp-for="Name" required placeholder="Luxury">
+        <span asp-validation-for="Name" class="field-error"></span>
+    </div>
+    <div class="modal-field">
+        <label>Description</label>
+        <textarea placeholder="Premium vehicles..."></textarea>
+    </div>
+    <div class="modal-actions">
+        <a class="admin-button cancel-modal" asp-action="Index">Cancel</a>
+        <button class="admin-button" type="submit">Save Category</button>
+    </div>
+</form>
